@@ -12,6 +12,15 @@ router.get('/', ensureAuthenticated, function(req, res){
 });
 
 
+//load user data
+router.get('/', function(req, res) {
+  User.find(function (err, users, res) {
+    if (err) return res.sendStatus(500);
+    res.render('users', { userList : users });
+  });
+});
+
+
 // Get Account Management Page
 router.get('/account', ensureAuthenticated, function(req, res){
 	// Get User Info
