@@ -14,7 +14,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 
 //load user data
-router.get('/', function(req, res) {
+router.get('/', ensureAuthenticated, function(req, res){
   db.getUsers()(function (err, users, res) {
     if (err) return res.sendStatus(500);
     res.render('index', { users : user });
