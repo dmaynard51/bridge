@@ -8,8 +8,11 @@ var db = mongoose.connection;
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
-	res.render('index');
+	User.find({}, function(err, users) {
+        res.render('/', {users: users});		
+	//res.render('index');
 	console.log("test2");
+		        });
 });
 
 
