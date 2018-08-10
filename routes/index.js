@@ -15,9 +15,9 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 
 //load user data
-    router.get('/', ensureAuthenticated, function(req, res) {
-        db.userid({}, function(err, users) {
-           res.render('/', {userid});
+	router.get('/', ensureAuthenticated, function(req, res){
+        User.findById(req.user.id, function(err, users) {
+           res.render('/', {contents: content});
         });
 	    console.log("test");
     });
