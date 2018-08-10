@@ -14,9 +14,10 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 //load user data
 router.get('/', function(req, res) {
-  User.find(function (err, users, res) {
+  db.getUsers()(function (err, users, res) {
     if (err) return res.sendStatus(500);
-    res.render('users', { userList : users });
+    res.render('index', { users : user });
+	  console.log("test");
   });
 });
 
