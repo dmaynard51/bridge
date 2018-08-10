@@ -7,12 +7,10 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 
 // Get Homepage
-router.get('/', ensureAuthenticated, function(req, res){
-	User.find({}, function(err, users) {
-        res.render('/', {users: users});		
-	//res.render('index');
+router.get('/', ensureAuthenticated, function(req, res){		
+	res.render('index');
 	console.log("test2");
-		        });
+
 });
 
 
