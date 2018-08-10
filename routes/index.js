@@ -32,10 +32,18 @@ router.get('/account', ensureAuthenticated, function(req, res){
 });
 
 //post update
-router.post('/account', (req, res) {
+router.post('/account', (req, res, next) => {
     	//update the fields in the database for logged in user
-        db.collection('User').update({_id: req.user.id}, {$set:{email: req.body.email, zip: req.body.zip}})
+        db.collection("User").update({_id: req.user.id}, {$set:{'email': req.body.email, 'zip': req.body.zip}}, (err, result) => {
+          if(err) {
+            throw err;
+          }
+	//reload account management page (had issues with loading the db values again, probably because this is a post call, not a get)
+          res.render('account');
+          console.log('account info updated sucessfully');
+        });
     });
+
 
 
 function ensureAuthenticated(req, res, next){
