@@ -14,7 +14,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 
 //load user data
-    router.get('/', function(req, res) {
+    router.get('/', ensureAuthenticated, function(req, res) {
         User.find({}, function(err, users) {
            res.render('/', {users: users});
         });
