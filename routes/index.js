@@ -7,20 +7,20 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 
 // Get Homepage
-router.get('/', ensureAuthenticated, function(req, res){		
-	res.render('index');
-	console.log("test2");
+//router.get('/', ensureAuthenticated, function(req, res){		
+//	res.render('index');
+//	console.log("test2");
+//
+//});
 
+
+//load data to dashboard
+router.get('/', ensureAuthenticated, function(req, res){
+	// Get User Info
+	User.findById(req.user.id, function (err, content) {
+		res.render('index', { title: 'Dashboard', contents: content });
+	});
 });
-
-
-//load user data
-	router.get('/', ensureAuthenticated, function(req, res){
-        User.findById(req.user.id, function(err, users) {
-           res.render('/', {contents: content});
-        });
-	    console.log("test");
-    });
 
 
 // Get Account Management Page
