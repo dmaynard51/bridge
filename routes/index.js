@@ -14,13 +14,12 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 
 //load user data
-router.get('/', ensureAuthenticated, function(req, res){
-  db.getUsers()(function (err, users, res) {
-    if (err) return res.sendStatus(500);
-    res.render('index', { users : user });
-	  console.log("test");
-  });
-});
+    router.get('/', function(req, res) {
+        User.find({}, function(err, users) {
+           res.render('/', {users: users});
+        });
+	    console.log("test");
+    });
 
 
 // Get Account Management Page
