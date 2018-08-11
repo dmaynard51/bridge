@@ -31,27 +31,70 @@ router.get('/account', ensureAuthenticated, function(req, res){
 	});
 });
 
+
+router.get('/education/', ensureAuthenticated, function(req, res){
+	// Get User Info
+
+		res.render('education');
+	
+});
+
+
+router.get('/education/CourseMaterial', function(req, res){
+
+ 
+    // Get the documents collection
+    var collection = db.collection('courseMaterial');
+ var testVariable;
+    // Find all students
+    collection.find({}).toArray(function (err, result) {
+    	testVariable = result[0].material;
+      if (err) {
+        res.send(err);
+      } else if (testVariable.length) {
+      	
+      	
+        res.render('CourseMaterial',{
+ 
+          // Pass the returned database documents to handlebar
+          "content" : testVariable
+        });
+        console.log(testVariable);
+      } else {
+        res.send('No documents found');
+      }
+      //Close connection
+      
+    });
+  
+});
+
+
 //post update
 router.post('/account', (req, res, next) => {
     	//update the fields in the database for logged in user
-        db.collection("User").update({_id: req.user.id}, {$set:{'email': req.body.email, 'zip': req.body.zip}}, (err, result) => {
+        db.collection("users").updateOne({"_id": req.user._id}, {$set:{'email': req.body.email, 'zip': req.body.zip}}, (err, result) => {
           if(err) {
             throw err;
           }
 	//reload account management page (had issues with loading the db values again, probably because this is a post call, not a get)
-          res.render('account');
+          res.redirect('back');
           console.log('account info updated sucessfully');
         });
     });
 
+
 //router.post('/account', function(req, res) {
 //    	//update the fields in the database for logged in user
-//        db.User.update({_id: req.user.id}, {$set:{email: req.body.email, zip: req.body.zip}}, function(err, result) {
+//        db.User.findByIdAndUpdate(req.params.id, {$set:{email: req.body.email, zip: req.body.zip}}, function(err, result) {
 //          if(err) {
 //            throw err;
 //          }
+//	//reload account management page (had issues with loading the db values again, probably because this is a post call, not a get)
+//          res.render('/account');
+//          console.log('account info updated sucessfully');
 //        });
-//   });
+//    });
 
 
 function ensureAuthenticated(req, res, next){
