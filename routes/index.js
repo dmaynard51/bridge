@@ -32,12 +32,33 @@ router.get('/account', ensureAuthenticated, function(req, res){
 });
 
 
-router.get('/education/', ensureAuthenticated, function(req, res){
-	// Get User Info
 
-		res.render('education');
-	
-});
+router.get('/education/', ensureAuthenticated, function(req, res){
+  var pathway;
+    User.findById(req.user.id, 'pathway', function(err, users) {
+      pathway = users.pathway;
+      var collection = db.collection(pathway);
+      collection.find({}).toArray(function(err, modules){
+        res.render('education', {title: 'Modules', contents: modules[0].modules});
+      })
+    });
+  });
+
+router.get('/robotics_Module/', ensureAuthenticated, function(req, res){
+      var collection = db.collection('roboticVision_Pathway');
+      collection.find('modules').toArray(function(err, modules){
+        console.log(modules[0].modules[0]);
+        res.render('module', {title: 'Modules', contents: modules[0].modules[0]});
+      })
+    });
+
+router.get('/machineLearning_Module/', ensureAuthenticated, function(req, res){
+  var collection = db.collection('roboticVision_Pathway');
+      collection.find('modules').toArray(function(err, modules){
+        console.log(modules[0].modules[1]);
+        res.render('module', {title: 'Modules', contents: modules[0].modules[1]});
+      })
+  });
 
 
 router.get('/education/CourseMaterial', function(req, res){
