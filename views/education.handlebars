@@ -1,12 +1,10 @@
- <h2 class="page-header">Education Module</h2>
+<h2 class="page-header">Robotic Vision Pathway</h2>
 
-
-	<div class="newContainer">
-      <div class="header clearfix">
-        <nav>
-          <ul>
-              <li role="presentation"><a href="/education/CourseMaterial">Education</a></li>
-          </ul>
-        </nav>
-      </div>
+ 	<div>
+ 	<ul>
+ 	 	{{#each contents}}
+ 			<li><a href="/{{module_name}}">{{module_name}}</a></li>
+ 		{{/each}}
+ 	</ul>
+ 	</div>
 
