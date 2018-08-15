@@ -18,6 +18,9 @@ var UserSchema = mongoose.Schema({
 	},
 	zip: {
 		type: Number
+	},
+	pathway: {
+		type: String
 	}
 });
 
